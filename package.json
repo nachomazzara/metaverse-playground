@@ -2,6 +2,17 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "dependencies": {
+    "prettier": "^1.12.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-panelgroup": "^1.0.5",
+    "react-redux": "^5.0.7",
+    "react-scripts-ts": "2.16.0",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1"
+  },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
@@ -29,9 +40,16 @@
     "typescript": "^2.8.3"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
-    "setupFiles": ["<rootDir>/config/polyfills.js"],
-    "testMatch": ["<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)", "<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)"
+    ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
@@ -40,11 +58,25 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
-    "moduleFileExtensions": ["web.ts", "ts", "web.tsx", "tsx", "web.js", "js", "web.jsx", "jsx", "json", "node", "mjs"],
+    "moduleFileExtensions": [
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "web.js",
+      "js",
+      "web.jsx",
+      "jsx",
+      "json",
+      "node",
+      "mjs"
+    ],
     "globals": {
       "ts-jest": {
         "tsConfigFile": "/Users/dani/Code/metaverse-playground/tsconfig.test.json"
@@ -52,7 +84,9 @@
     }
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Editor } from './components'
+import Editor from './components/Editor'
 import PanelGroup from 'react-panelgroup'
 import './App.css'
 
