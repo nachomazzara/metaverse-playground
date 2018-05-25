@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Editor } from './components'
+import { Editor, Preview } from './components'
 import PanelGroup from 'react-panelgroup'
 import './App.css'
 
@@ -14,7 +14,7 @@ class App extends React.Component {
       <div className="App">
         <PanelGroup borderColor="grey" onUpdate={this.handleResize}>
           <Editor content="asd" />
-          <div>{'panel 2'}</div>
+          <Preview />
         </PanelGroup>
       </div>
     )
