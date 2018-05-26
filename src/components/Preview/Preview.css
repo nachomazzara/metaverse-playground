@@ -2,3 +2,8 @@
   width: 100%;
   height: 100%;
 }
+
+.preview-wrapper div {
+  /* these are the stats */
+  position: absolute !important;
+}
