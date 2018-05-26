@@ -1,3 +1,5 @@
+import { IFileState } from '../../modules/file/types'
+
 export enum EditorLanguage {
   TS = 'typescript',
   XML = 'xml',
@@ -6,10 +8,10 @@ export enum EditorLanguage {
 
 export interface IProps {
   content: string
-  currentFile: string
-  files: object
-  addFiles: Function
-  removeFiles: Function
+  files: IFileState
+  addFiles: (name: string) => void
+  removeFiles: (name: string) => void
   language: EditorLanguage
   onChange: (value: string) => any
+  changeCurrentFile: (name: string) => void
 }

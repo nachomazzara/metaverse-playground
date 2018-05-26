@@ -2,21 +2,10 @@ import { normalizeTypes } from '../common/utils'
 
 export const CHANGE_FILE = normalizeTypes('change file')
 
-export function changeFileRequest() {
+export function changeFileRequest(name) {
   return {
-    type: CHANGE_FILE.request
-  }
-}
-
-export function changeFileSuccess() {
-  return {
-    type: CHANGE_FILE.success
-  }
-}
-
-export function changeFileFailed() {
-  return {
-    type: CHANGE_FILE.failed
+    type: CHANGE_FILE.request,
+    name
   }
 }
 

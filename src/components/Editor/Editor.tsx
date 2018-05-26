@@ -43,11 +43,11 @@ class Editor extends React.PureComponent<IProps> {
   }
 
   render() {
-    const { files, addFiles, removeFiles, content } = this.props
+    const { files, addFiles, removeFiles, content, changeCurrentFile } = this.props
 
     return (
       <React.Fragment>
-        <EditorTabs files={files} handlerAdd={addFiles} handlerRemove={removeFiles} />
+        <EditorTabs files={files} handlerAdd={addFiles} handlerRemove={removeFiles} handlerCurrentFile={changeCurrentFile} />
         <Monaco className="editor-wrapper" value={content} onEditorCreated={this.handleEditorCreated} onChange={this.handleChange} />
       </React.Fragment>
     )
