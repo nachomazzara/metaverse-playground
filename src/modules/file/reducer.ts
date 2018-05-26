@@ -3,14 +3,20 @@ import { combineReducers } from 'redux'
 import { IFileState } from './types'
 import { CHANGE_FILE, CREATE_FILE, REMOVE_FILE, WRITE_FILE } from './actions'
 
-declare global {
-  interface Window { sceneJson: any; }
-}
-
+const blobUrl2 = window.URL.createObjectURL(
+  new Blob([`<scene>
+    <box position="5 0.5 5" rotation="0 45 0" color="#4CC3D9"></box>
+    <sphere position="6 1.25 4" radius="1.25" color="#EF2D5E"></sphere>
+    <cylinder position="7 0.75 3" radius="0.5" height="1.5" color="#FFC65D"></cylinder>
+    <plane position="5 0 6" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></plane>
+</scene>`], { type: 'text/xml' })
+)
+// console.log(window.sceneJson.main, blobUrl2)
+// window.sceneJson.main = blobUrl2
 const DATA_INITIAL_STATE: IFileState = {
   'scene.xml': {
     name: 'scene.xml',
-    blobUrl: '',
+    blobURL: blobUrl2,
     content: `<scene>
     <box position="5 0.5 5" rotation="0 45 0" color="#4CC3D9"></box>
     <sphere position="6 1.25 4" radius="1.25" color="#EF2D5E"></sphere>
@@ -32,19 +38,13 @@ function data(state: IFileState = DATA_INITIAL_STATE, action) {
         }
       }
     }
-    case WRITE_FILE.request: {
-      const blobUrl = window.URL.createObjectURL(
-        new Blob([action.content], { type: 'text/xml' })
-      )
-
-      window.sceneJson.main = blobUrl
-
+    case WRITE_FILE.success: {
       return {
         ...state,
         [action.name]: {
           name: action.name,
           content: action.content,
-          blobUrl
+          blobURL: action.blobURL
         }
       }
     }

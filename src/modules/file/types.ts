@@ -4,6 +4,6 @@ export type IFileState = IDictionary<IFile>
 
 export interface IFile {
   name: string
-  blobUrl: string
+  blobURL: string
   content: string
 }

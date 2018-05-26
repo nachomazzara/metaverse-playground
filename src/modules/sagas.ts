@@ -1,5 +1,9 @@
+import { all } from 'redux-saga/effects'
+
+import filesSagas from 'src/modules/file/saga'
+
 export default function* rootSaga() {
-  return [
-    function* foo() { return true }
-  ]
+  yield all([
+    filesSagas()
+  ])
 }

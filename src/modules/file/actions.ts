@@ -36,3 +36,12 @@ export function writeFileRequest(name, content) {
     content
   }
 }
+
+export function writeFileSuccess(name, content, blobURL) {
+  return {
+    type: WRITE_FILE.success,
+    name,
+    content,
+    blobURL
+  }
+}
