@@ -21,7 +21,6 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>React App</title>
-  <script src="vs/loader.js"></script>
 </head>
 
 <body>
@@ -39,7 +38,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-
+  <script src="require.js"></script>
   <script>
     window.sceneJson = {
       "display": {
@@ -68,12 +67,15 @@
       },
       "main": "https://raw.githubusercontent.com/decentraland/cli/master/src/samples/basic-static/scene.xml"
     }
-    require(['preview.js', 'vs/editor/editor.main'], () => {
-      console.log('Monaco loaded', monaco);
-      window.dispatchEvent(new Event('MONACO_LOADED'))
+
+    require(['vs/editor/editor.main'], () => {
+        console.log('Monaco loaded', monaco);
+        window.dispatchEvent(new Event('MONACO_LOADED'))
     })
 
     function reloadPreview() {
+      document.getElementById('previewContainer').innerHTML = ""
+      require.undef('preview.js')
       require(['preview.js'], () => {
           window.dispatchEvent(new Event('MONACO_LOADED'))
         })
