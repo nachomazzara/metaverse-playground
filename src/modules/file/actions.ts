@@ -1,13 +1,12 @@
 import { normalizeTypes } from '../common/utils'
 
-export const CHANGE_FILE  = normalizeTypes('change file')
+export const CHANGE_FILE = normalizeTypes('change file')
 
 export function changeFileRequest() {
   return {
     type: CHANGE_FILE.request
   }
 }
-
 
 export function changeFileSuccess() {
   return {
@@ -21,7 +20,7 @@ export function changeFileFailed() {
   }
 }
 
-export const CREATE_FILE  = normalizeTypes('create file')
+export const CREATE_FILE = normalizeTypes('create file')
 
 export function createFileRequest(name) {
   return {
@@ -30,8 +29,7 @@ export function createFileRequest(name) {
   }
 }
 
-export const REMOVE_FILE  = normalizeTypes('remove file')
-
+export const REMOVE_FILE = normalizeTypes('remove file')
 
 export function removeFileRequest(name) {
   return {
@@ -39,5 +37,3 @@ export function removeFileRequest(name) {
     name
   }
 }
-
-

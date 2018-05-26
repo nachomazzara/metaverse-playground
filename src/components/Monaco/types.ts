@@ -5,4 +5,5 @@ export interface IProps {
   options?: monaco.editor.IEditorConstructionOptions
   value?: string
   onChange?: (value: string, event) => void
+  onEditorCreated?: (editor: monaco.editor.IStandaloneCodeEditor) => void
 }
