@@ -1,6 +1,7 @@
 export interface IProps {
   content: string,
   files: object,
-  addFiles: Function,
-  removeFiles: Function
+  addFiles: (name: string) => void,
+  removeFiles: (name: string) => void,
+  changeCurrentFile: (name: string) => void
 }
