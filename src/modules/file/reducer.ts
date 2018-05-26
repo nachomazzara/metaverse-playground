@@ -4,7 +4,9 @@ import { IFileState } from './types'
 import { CHANGE_FILE, CREATE_FILE, REMOVE_FILE, WRITE_FILE } from './actions'
 
 declare global {
-  interface Window { sceneJson: any; }
+  interface Window {
+    sceneJson: any
+  }
 }
 
 const DATA_INITIAL_STATE: IFileState = {
@@ -33,9 +35,7 @@ function data(state: IFileState = DATA_INITIAL_STATE, action) {
       }
     }
     case WRITE_FILE.request: {
-      const blobUrl = window.URL.createObjectURL(
-        new Blob([action.content], { type: 'text/xml' })
-      )
+      const blobUrl = 'data:text/plain;base64,' + btoa(action.content)
 
       window.sceneJson.main = blobUrl
 
