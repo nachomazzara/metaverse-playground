@@ -15,10 +15,8 @@ export default function* fileSagas() {
 }
 
 function* handleWriteFile({ name, content }: any) {
-  const blobUrl = window.URL.createObjectURL(
-    new Blob([content], { type: 'text/xml' })
-  )
+  const blobUrl = 'data:text/plain;base64,' + btoa(content)
   yield put(writeFileSuccess(name, content, blobUrl))
-  // window.sceneJson.main = blobUrl
+  window.sceneJson.main = blobUrl
   window.reloadPreview()
 }
