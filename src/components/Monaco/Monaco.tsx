@@ -12,7 +12,7 @@ class MonacoEditor extends React.Component<IProps> {
 
   static defaultProps: IProps = {
     value: '',
-    language: 'typescript',
+    language: 'xml',
     theme: 'vs-dark',
     options: {},
     onChange: () => {},
@@ -43,17 +43,10 @@ class MonacoEditor extends React.Component<IProps> {
 
   monacoDidMount = () => {
     this.initMonaco()
-    this.editorDidMount()
   }
 
   editorDidMount() {
     const { onChange } = this.props
-
-    this.editor.onDidScrollChange(() => {
-      if (this.oldDecorations.length) {
-        window['TooltipManager'].addTo('.myGlyphMarginClass', 'Click to create new Input')
-      }
-    })
 
     this.editor.onDidChangeModelContent(event => {
       const value = this.editor.getValue()
@@ -82,6 +75,8 @@ class MonacoEditor extends React.Component<IProps> {
 
     if (typeof monaco !== 'undefined' && !this.editor) {
       this.editor = monaco.editor.create(this.containerElement, options)
+      this.editorDidMount()
+      if (this.props.onEditorCreated) this.props.onEditorCreated(this.editor)
       this.__prevent_trigger_change_event = true
       this.setState({ ...this.state }) // investigate why this is necesary
       this.editor.setValue(value)

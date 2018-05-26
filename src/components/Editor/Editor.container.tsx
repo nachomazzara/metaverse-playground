@@ -1,19 +1,20 @@
 import { connect } from 'react-redux'
 
 import { default as Editor } from './Editor'
-import { getFiles } from 'src/modules/file/selectors'
+import {getCurrentFile, getFiles} from 'src/modules/file/selectors'
 import { createFileRequest, removeFileRequest, changeFileRequest, writeFileRequest } from 'src/modules/file/actions'
+import { IProps } from './types'
 
 const mapState = state => ({
-  files: getFiles(state)
+  files: getFiles(state),
+  currentFile: getCurrentFile(state)
 })
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch, ownProps: IProps) => ({
   addFiles: name => dispatch(createFileRequest(name)),
-  writeFiles: name => dispatch(writeFileRequest(name)),
   removeFiles: name => dispatch(removeFileRequest(name)),
   changeCurrentFile: name => dispatch(changeFileRequest(name)),
-  writeFile: name => dispatch(writeFileRequest(name))
+  onChange: (name, content) => dispatch(writeFileRequest(name, content))
 })
 
 export default connect(mapState, mapDispatch)(Editor)

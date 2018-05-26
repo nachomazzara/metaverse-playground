@@ -1,6 +1,6 @@
 import { normalizeTypes } from '../common/utils'
 
-export const CHANGE_FILE  = normalizeTypes('change file')
+export const CHANGE_FILE = normalizeTypes('change file')
 
 export function changeFileRequest(name) {
   return {
@@ -9,7 +9,7 @@ export function changeFileRequest(name) {
   }
 }
 
-export const CREATE_FILE  = normalizeTypes('create file')
+export const CREATE_FILE = normalizeTypes('create file')
 
 export function createFileRequest(name) {
   return {
@@ -18,8 +18,7 @@ export function createFileRequest(name) {
   }
 }
 
-export const REMOVE_FILE  = normalizeTypes('remove file')
-
+export const REMOVE_FILE = normalizeTypes('remove file')
 
 export function removeFileRequest(name) {
   return {
@@ -37,5 +36,3 @@ export function writeFileRequest(name, content) {
     content
   }
 }
-
-
