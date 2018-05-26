@@ -3,5 +3,6 @@ export interface IProps {
   files: object,
   addFiles: (name: string) => void,
   removeFiles: (name: string) => void,
-  changeCurrentFile: (name: string) => void
+  changeCurrentFile: (name: string) => void,
+  writeFile: (name: string) => void
 }

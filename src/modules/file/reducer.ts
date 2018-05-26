@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import {CHANGE_FILE, CREATE_FILE, REMOVE_FILE} from './actions'
+import { CHANGE_FILE, CREATE_FILE, REMOVE_FILE, WRITE_FILE } from './actions'
 
 const DATA_INITIAL_STATE = {
   'scene.tsx': {
@@ -19,6 +19,16 @@ function data(state = DATA_INITIAL_STATE, action) {
           name: action.name,
           blobUrl: '',
           content: '',
+        }
+      }
+    }
+    case WRITE_FILE.request: {
+      return {
+        ...state,
+        [action.name]: {
+          name: action.name,
+          blobUrl: '',
+          content: action.content,
         }
       }
     }

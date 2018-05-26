@@ -11,7 +11,7 @@ class Editor extends React.PureComponent<IProps> {
     return (
       <React.Fragment>
         <EditorTabs files={files} handlerAdd={addFiles} handlerRemove={removeFiles} handlerCurrentFile={changeCurrentFile} />
-        <Monaco className="editor-wrapper" />
+        <Monaco className="editor-wrapper"  />
       </React.Fragment>
     )
   }

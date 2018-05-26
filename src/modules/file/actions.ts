@@ -28,4 +28,14 @@ export function removeFileRequest(name) {
   }
 }
 
+export const WRITE_FILE = normalizeTypes('write file')
+
+export function writeFileRequest(name, content) {
+  return {
+    type: WRITE_FILE.request,
+    name,
+    content
+  }
+}
+
 
