@@ -39,8 +39,36 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
   <script>
-    require(['vs/editor/editor.main'], () => {
+    window.sceneJson = {
+      "display": {
+        "title": "Hello World - Decentraland Edition"
+      },
+      "owner": "",
+      "contact": {
+        "name": "Leonardo Javier Belen",
+        "email": "leobelen@gmail.com"
+      },
+      "scene": {
+        "parcels": [
+          "0,0"
+        ],
+        "base": "0,0"
+      },
+      "communications": {
+        "type": "webrtc",
+        "signalling": "https://rendezvous.decentraland.org"
+      },
+      "policy": {
+        "fly": true,
+        "voiceEnabled": true,
+        "blacklist": [],
+        "teleportPosition": "0,0,0"
+      },
+      "main": "https://raw.githubusercontent.com/decentraland/cli/master/src/samples/basic-static/scene.xml"
+    }
+    require(['preview.js', 'vs/editor/editor.main'], () => {
       console.log('Monaco loaded', monaco);
       window.dispatchEvent(new Event('MONACO_LOADED'))
     })
