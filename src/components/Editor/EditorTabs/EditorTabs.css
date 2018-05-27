@@ -2,15 +2,24 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: #fff;
+  background: #000;
   z-index: 1;
-  padding: 10px;
   width: 100%;
 }
 
 .tabs-container a{
+  display: inline-flex;
   cursor: pointer;
-  border-right: 1px solid grey;
-  margin: 0 5px;
-  padding: 0 3px;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 100;
+  background-color: #1c2022;
+  color: white;
+  font-style: italic;
+  border-right: 1px solid #585858;
+}
+
+.tabs-container a.active{
+  height: calc(100% - 1px);
+  border-bottom: 1px solid #6caedd;
 }

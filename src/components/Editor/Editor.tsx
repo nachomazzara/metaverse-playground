@@ -22,6 +22,13 @@ class Editor extends React.PureComponent<IProps, { value: string }> {
       ), 500)
   }
 
+  UNSAFE_componentWillReceiveProps(props) {
+    if (this.props.currentFile != props.currentFile) {
+      this.setState({ value: props.files[props.currentFile].content })
+    }
+
+  }
+
   handleEditorCreated = (editor: monaco.editor.IStandaloneCodeEditor) => {
     this.editor = editor
   }
@@ -54,12 +61,16 @@ class Editor extends React.PureComponent<IProps, { value: string }> {
   }
 
   render() {
-    const { files, addFiles, removeFiles, changeCurrentFile, language } = this.props
+    const { files, currentFile, addFiles, removeFiles, changeCurrentFile, language } = this.props
     const { value } = this.state
 
     return (
       <React.Fragment>
-        <EditorTabs files={files} handlerAdd={addFiles} handlerRemove={removeFiles} handlerCurrentFile={changeCurrentFile} />
+        <EditorTabs files={files}
+                    currentFile={currentFile}
+                    handlerAdd={addFiles}
+                    handlerRemove={removeFiles}
+                    handlerCurrentFile={changeCurrentFile} />
         <Monaco language={language} className="editor-wrapper" value={value} onEditorCreated={this.handleEditorCreated} onChange={this.handleChange} />
       </React.Fragment>
     )
