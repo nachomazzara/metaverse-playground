@@ -1,28 +1,32 @@
 import * as React from 'react'
-import { IProps, EditorLanguage } from './types'
+import { IProps } from './types'
 import Monaco from 'src/components/Monaco'
 import EditorTabs from './EditorTabs'
 import { debounce } from 'src/modules/common/utils'
 import './Editor.css'
 
-class Editor extends React.PureComponent<IProps, { value: string }> {
+class Editor extends React.PureComponent<IProps, { original: string, transpiled: string }> {
   private editor: monaco.editor.IStandaloneCodeEditor
   private debouncedOnChange: () => void
 
   constructor(props: any) {
     super(props)
-    this.state = { value: props.files[props.currentFile].content }
+    this.state = {
+      original: props.files[props.currentFile].content,
+      transpiled : props.files[props.currentFile].content
+    }
   }
 
   componentDidMount() {
-    this.debouncedOnChange = debounce(() => this.props.onChange(this.props.currentFile, this.state.value), 500)
+    this.debouncedOnChange = debounce(() =>
+      this.props.onChange(this.props.currentFile, this.state.transpiled), 500)
   }
 
-  UNSAFE_componentWillReceiveProps(props) {
+ /* UNSAFE_componentWillReceiveProps(props) {
     if (this.props.currentFile != props.currentFile) {
       this.setState({ value: props.files[props.currentFile].content })
     }
-  }
+  }*/
 
   handleEditorCreated = (editor: monaco.editor.IStandaloneCodeEditor) => {
     this.editor = editor
@@ -34,31 +38,13 @@ class Editor extends React.PureComponent<IProps, { value: string }> {
 
   handleChange = async (val: string): Promise<boolean | void> => {
     let content = val
-    if (this.props.language === EditorLanguage.TS) {
-      const service = await this.getTypescriptService()
-      const result = await service.getEmitOutput(this.editor.getModel().uri.toString())
-      if (result.emitSkipped) {
-        return false
-      }
-
-      if (!result.outputFiles || !result.outputFiles[0]) {
-        return false
-      }
-
-      const text = await result.outputFiles[0].text
-      if (typeof text === 'string') {
-        console.log('transpiled:', text)
-        content = text
-      }
-    } else {
-      this.setState({ value: content })
-    }
+    this.setState({ original: val, transpiled: content })
     this.debouncedOnChange()
   }
 
   render() {
     const { files, currentFile, addFiles, removeFiles, changeCurrentFile, language } = this.props
-    const { value } = this.state
+    const { original: value } = this.state
 
     return (
       <React.Fragment>

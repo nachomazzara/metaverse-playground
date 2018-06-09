@@ -37,11 +37,11 @@ export function writeFileRequest(name, content) {
   }
 }
 
-export function writeFileSuccess(name, content, blobURL) {
+export function writeFileSuccess(name, content, encode) {
   return {
     type: WRITE_FILE.success,
     name,
     content,
-    blobURL
+    encode
   }
 }

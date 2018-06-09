@@ -94,7 +94,6 @@ class MonacoEditor extends React.Component<IProps> {
         const model = this.editor.getModel()
         const uri = new monaco.Uri()
         uri.with({ path: 'file:///main.tsx' })
-        console.log('a', monaco.languages.typescript.typescriptDefaults['getExtraLibs']())
         if (this.props.language != newProps.language || !model) {
           this.editor.setModel(monaco.editor.createModel(newProps.value, newProps.language, uri))
           if (model) model.dispose()
