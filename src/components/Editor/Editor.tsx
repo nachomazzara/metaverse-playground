@@ -5,28 +5,18 @@ import EditorTabs from './EditorTabs'
 import { debounce } from 'src/modules/common/utils'
 import './Editor.css'
 
-class Editor extends React.PureComponent<IProps, { original: string, transpiled: string }> {
+class Editor extends React.PureComponent<IProps, { val: string }> {
   private editor: monaco.editor.IStandaloneCodeEditor
   private debouncedOnChange: () => void
 
   constructor(props: any) {
     super(props)
-    this.state = {
-      original: props.files[props.currentFile].content,
-      transpiled : props.files[props.currentFile].content
-    }
+    this.state = { val: props.files[props.currentFile].raw }
   }
 
   componentDidMount() {
-    this.debouncedOnChange = debounce(() =>
-      this.props.onChange(this.props.currentFile, this.state.transpiled), 500)
+    this.debouncedOnChange = debounce(() => this.props.onChange(this.props.currentFile, this.state.val), 500)
   }
-
- /* UNSAFE_componentWillReceiveProps(props) {
-    if (this.props.currentFile != props.currentFile) {
-      this.setState({ value: props.files[props.currentFile].content })
-    }
-  }*/
 
   handleEditorCreated = (editor: monaco.editor.IStandaloneCodeEditor) => {
     this.editor = editor
@@ -37,14 +27,13 @@ class Editor extends React.PureComponent<IProps, { original: string, transpiled:
   }
 
   handleChange = async (val: string): Promise<boolean | void> => {
-    let content = val
-    this.setState({ original: val, transpiled: content })
+    this.setState({ val: val })
     this.debouncedOnChange()
   }
 
   render() {
     const { files, currentFile, addFiles, removeFiles, changeCurrentFile, language } = this.props
-    const { original: value } = this.state
+    const { val } = this.state
 
     return (
       <React.Fragment>
@@ -58,7 +47,7 @@ class Editor extends React.PureComponent<IProps, { original: string, transpiled:
         <Monaco
           language={language}
           className="editor-wrapper"
-          value={value}
+          value={val}
           onEditorCreated={this.handleEditorCreated}
           onChange={this.handleChange}
         />

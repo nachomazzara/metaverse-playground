@@ -1,4 +1,4 @@
-export async function transformMetaverseImports (content: string) {
+export async function transformMetaverseImports(content: string) {
   const [metaverseApiResponse, metaverseRPCResponse] = await Promise.all([
     fetch('metaverse/metaverse-api.js'),
     fetch('metaverse/metaverse-rpc.js')
@@ -9,7 +9,14 @@ export async function transformMetaverseImports (content: string) {
   ${metaverseRPCRaw}
   ${content
     .replace(/import/g, 'const')
-    .replace('from \'metaverse-api\'', ' = metaverseApi')
+    .replace("from 'metaverse-api'", ' = metaverseApi')
     .replace('export default', '')}
     new RollerCoaster(WebWorkerTransport(self))`
+}
+
+export function compileTypescript(src: string) {
+  return window['ts'].transpile(src, {
+    jsx: 2,
+    jsxFactory: 'createElement'
+  })
 }
