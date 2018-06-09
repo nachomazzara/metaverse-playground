@@ -68,18 +68,10 @@
       "main": "https://raw.githubusercontent.com/decentraland/cli/master/src/samples/basic-static/scene.xml"
     }
 
-    require(['vs/editor/editor.main'], () => {
-        console.log('Monaco loaded', monaco);
-        window.dispatchEvent(new Event('MONACO_LOADED'))
+    require(['vs/editor/editor.main', 'preview.js'], () => {
+      console.log('Monaco loaded', monaco);
+      window.dispatchEvent(new Event('MONACO_LOADED'))
     })
-
-    function reloadPreview() {
-      document.getElementById('previewContainer').innerHTML = ""
-      require.undef('preview.js')
-      require(['preview.js'], () => {
-          window.dispatchEvent(new Event('MONACO_LOADED'))
-        })
-    }
   </script>
 </body>
 
