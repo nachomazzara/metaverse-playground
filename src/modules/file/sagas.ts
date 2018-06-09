@@ -7,7 +7,8 @@ export default function* fileSagas() {
 }
 
 function* handleWriteFile({ name, content }: any) {
-  const encoded = 'data:text/plain;base64,' + btoa(content)
+  const types = ['text/plain', 'application/javascript']
+  const encoded = `data:${types[1]};base64,${btoa(content)}`
   yield put(writeFileSuccess(name, content, encoded))
   window['sceneJson'].main = encoded
   window['handleServerMessage']({ type: 'update' })

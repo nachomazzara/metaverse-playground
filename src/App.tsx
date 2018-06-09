@@ -14,7 +14,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <PanelGroup borderColor="grey" onUpdate={this.handleResize}>
-          <Editor language={EditorLanguage.XML} />
+          <Editor language={EditorLanguage.TS} />
           <Preview />
         </PanelGroup>
       </div>

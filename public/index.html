@@ -71,6 +71,12 @@
     require(['vs/editor/editor.main', 'preview.js'], () => {
       console.log('Monaco loaded', monaco);
       window.dispatchEvent(new Event('MONACO_LOADED'))
+
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        "jsx": 2,
+        "jsxFactory": "createElement",
+        allowNonTsExtensions: true
+      });
     })
   </script>
 </body>

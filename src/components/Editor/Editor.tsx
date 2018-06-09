@@ -14,19 +14,14 @@ class Editor extends React.PureComponent<IProps, { value: string }> {
     this.state = { value: props.files[props.currentFile].content }
   }
 
-
   componentDidMount() {
-    this.debouncedOnChange = debounce(() =>
-      this.props.onChange(
-        this.props.currentFile, this.state.value
-      ), 500)
+    this.debouncedOnChange = debounce(() => this.props.onChange(this.props.currentFile, this.state.value), 500)
   }
 
   UNSAFE_componentWillReceiveProps(props) {
     if (this.props.currentFile != props.currentFile) {
       this.setState({ value: props.files[props.currentFile].content })
     }
-
   }
 
   handleEditorCreated = (editor: monaco.editor.IStandaloneCodeEditor) => {
@@ -41,7 +36,7 @@ class Editor extends React.PureComponent<IProps, { value: string }> {
     let content = val
     if (this.props.language === EditorLanguage.TS) {
       const service = await this.getTypescriptService()
-      const result =  service.getEmitOutput(this.editor.getModel().uri.toString())
+      const result = await service.getEmitOutput(this.editor.getModel().uri.toString())
       if (result.emitSkipped) {
         return false
       }
@@ -55,8 +50,9 @@ class Editor extends React.PureComponent<IProps, { value: string }> {
         console.log('transpiled:', text)
         content = text
       }
+    } else {
+      this.setState({ value: content })
     }
-    this.setState({ value: content })
     this.debouncedOnChange()
   }
 
@@ -66,12 +62,20 @@ class Editor extends React.PureComponent<IProps, { value: string }> {
 
     return (
       <React.Fragment>
-        <EditorTabs files={files}
-                    currentFile={currentFile}
-                    handlerAdd={addFiles}
-                    handlerRemove={removeFiles}
-                    handlerCurrentFile={changeCurrentFile} />
-        <Monaco language={language} className="editor-wrapper" value={value} onEditorCreated={this.handleEditorCreated} onChange={this.handleChange} />
+        <EditorTabs
+          files={files}
+          currentFile={currentFile}
+          handlerAdd={addFiles}
+          handlerRemove={removeFiles}
+          handlerCurrentFile={changeCurrentFile}
+        />
+        <Monaco
+          language={language}
+          className="editor-wrapper"
+          value={value}
+          onEditorCreated={this.handleEditorCreated}
+          onChange={this.handleChange}
+        />
       </React.Fragment>
     )
   }
