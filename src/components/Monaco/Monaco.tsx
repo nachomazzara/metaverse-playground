@@ -121,16 +121,18 @@ class MonacoEditor extends React.Component<IProps> {
     }
 
     return (
-      <div
-        key="monaco"
-        ref={a => {
-          this.containerElement = a
-        }}
-        style={style}
-        className={`react-monaco-editor-container ${className}`}
-      >
-        {this.editor ? null : <span>Loading...</span>}
+      <div className={className}>
+        <div
+          key="monaco"
+          ref={a => {
+            this.containerElement = a
+          }}
+          style={style}
+          className={'react-monaco-editor-container'}>
+            {this.editor ? null : <span>Loading...</span>}
+        </div>
       </div>
+
     )
   }
 }

@@ -5,13 +5,22 @@ export async function transformMetaverseImports(content: string) {
   ])
   const metaverseApiRaw = await metaverseApiResponse.text()
   const metaverseRPCRaw = await metaverseRPCResponse.text()
+  const contentRaw = getContentRow(content)
+  const className = contentRaw.match(/class ([^\s]+)/i)[1]
+
   return `${metaverseApiRaw}
   ${metaverseRPCRaw}
-  ${content
+  ${getContentRow(content)}
+  new ${className}(WebWorkerTransport(self))`
+}
+
+export function getContentRow(content: string) {
+  return content
+    .replace(/"/g, '\'')
     .replace(/import/g, 'const')
-    .replace("from 'metaverse-api'", ' = metaverseApi')
-    .replace('export default', '')}
-    new RollerCoaster(WebWorkerTransport(self))`
+    .replace('from \'metaverse-api\'', ' = metaverseApi')
+    .replace(/export/g, '')
+    .replace(/default/g, '')
 }
 
 export function compileTypescript(src: string) {

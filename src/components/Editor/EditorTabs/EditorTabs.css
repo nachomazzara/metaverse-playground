@@ -11,15 +11,17 @@
   display: inline-flex;
   cursor: pointer;
   padding: 11px;
-  font-size: 14px;
   font-weight: 100;
   background-color: #1c2022;
-  color: white;
+  color: #d4d4d4;
   font-style: italic;
-  border-right: 1px solid #585858;
+  border-right: 1px solid #585858bf;
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 12px;
 }
 
 .tabs-container a.active{
-  height: calc(100% - 1px);
-  border-bottom: 1px solid #6caedd;
+  height: calc(100% - 2px);
+  border-bottom: 2px solid #6caedd;
+
 }
