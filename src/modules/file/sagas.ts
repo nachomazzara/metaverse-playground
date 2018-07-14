@@ -1,22 +1,27 @@
-import { takeLatest, put, call } from 'redux-saga/effects'
+import { takeLatest, put, call, select } from 'redux-saga/effects'
 import { WRITE_FILE, writeFileSuccess } from './actions'
+import { getMainFile } from './selectors'
 import { compileTypescript, transformMetaverseImports } from './utils'
 
 export default function* fileSagas() {
   yield takeLatest(WRITE_FILE.request as any, handleWriteFile)
 }
 
-function* handleWriteFile({ name, raw }: { name: string; raw: string }) {
+function* handleWriteFile(action) {
+  const { path, raw } = action.payload as { path: string; raw: string }
   const types = ['text/plain', 'application/javascript']
   let encoded
-  if (name.endsWith('.xml')) {
+  if (path.endsWith('.xml')) {
     encoded = `data:${types[1]};base64,${btoa(raw)}`
-    yield put(writeFileSuccess(name, raw, encoded))
   } else {
-    const resolved = yield call(() => transformMetaverseImports(raw))
+    const mainFile = yield select(getMainFile)
+    const resolved = yield call(() => transformMetaverseImports(mainFile.raw))
     encoded = `data:${types[1]};base64,${btoa(compileTypescript(resolved))}`
-    yield put(writeFileSuccess(name, raw, encoded))
   }
+  console.log('c')
+
+  yield put(writeFileSuccess(path, raw, encoded))
+
   window['sceneJson'].main = encoded // TODO rename to something other than sceneJson
   window['handleServerMessage']({ type: 'update' })
 }
