@@ -1,32 +1,61 @@
-import { call } from 'redux-saga/effects'
-import { IDictionary } from '../common/types'
-import { IGenericEvent } from './types'
+import { eventChannel } from 'redux-saga'
+import { call, take, fork } from 'redux-saga/effects'
+import { IGenericEvent, WorkerEvent } from './types'
+import worker from './TypescriptWorkerClient'
 
-const tsWorkerRaw = require('raw-loader!./TypescriptWorker.ts')
-const tsWorkerBLOB = new Blob([tsWorkerRaw])
-const tsWorkerUrl = URL.createObjectURL(tsWorkerBLOB)
-const tsWorker: Worker = new Worker(tsWorkerUrl)
+function createWorkerChannel(worker: Worker) {
+  return eventChannel(emit => {
+    const messageHandler = event => {
+      emit(event as MessageEvent)
+    }
 
-const pending: IDictionary<() => void> = {}
+    worker.addEventListener('message', messageHandler)
 
-tsWorker.onmessage = (evt: IGenericEvent) => {
-  pending[evt.id]()
-}
+    const unsubscribe = () => {
+      worker.removeEventListener('message', messageHandler)
+    }
 
-function emit(evt: Pick<IGenericEvent, 'type' | 'payload'>) {
-  const id = `${evt}_${Date.now()}`
-
-  return new Promise((resolve, reject) => {
-    pending[id] = resolve
-    tsWorker.postMessage({ id, ...evt } as IGenericEvent)
+    return unsubscribe
   })
 }
 
-export function transpile() {
-  return call(() =>
-    emit({
-      type: 'hello',
-      payload: null
+function* readDirResponse(id: string) {
+  yield call(() =>
+    worker.postMessage({
+      id,
+      type: 'READ_DIR_RESPONSE',
+      payload: {}
     })
   )
+}
+
+function* readDirResponse2(id: string) {
+  yield call(() =>
+    worker.postMessage({
+      id,
+      type: 'READ_DIR_RESPONSE2',
+      payload: {}
+    })
+  )
+}
+
+export function* watchWorkerMessages() {
+  const workerChannel = yield call(createWorkerChannel, worker)
+
+  while (true) {
+    const evt: MessageEvent = yield take(workerChannel)
+    const msg: IGenericEvent = evt.data
+
+    switch (msg.type) {
+      case WorkerEvent.READ_DIR_REQUEST:
+        yield fork(readDirResponse, msg.id)
+        yield fork(readDirResponse2, msg.id)
+        break
+      default:
+        console.log(msg)
+        break
+    }
+
+    // handle
+  }
 }
