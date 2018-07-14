@@ -68,7 +68,7 @@
     }
 
     require(['vs/editor/editor.main', 'https://unpkg.com/typescript@2.9.1/lib/typescriptServices.js', 'preview.js'], () => {
-      console.log('Monaco loaded', monaco);
+      console.log('Monaco loaded', monaco)
       window.dispatchEvent(new Event('MONACO_LOADED'))
 
       monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({

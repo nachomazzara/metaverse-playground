@@ -4,9 +4,9 @@ import './EditorTabs.css'
 
 export default class EditorTabs extends React.PureComponent<{
   files: object
-  handlerAdd: (name: string) => void
-  handlerRemove: (name: string) => void
-  handlerCurrentFile: (name: string) => void,
+  handlerAdd: (path: string, value: string) => void
+  handlerRemove: (path: string) => void
+  handlerCurrentFile: (path: string) => void,
   currentFile: string,
 }> {
   state = { fileName: '' }
@@ -19,8 +19,8 @@ export default class EditorTabs extends React.PureComponent<{
         {Object.keys(files).map(key => (
           <React.Fragment key={files[key].name}>
             <a className={currentFile === key && 'active'}
-               onClick={() => handlerCurrentFile(files[key].name)}>{files[key].name}</a>
-            <a onClick={() => handlerRemove(files[key].name)} style={{ display: 'none' }}>
+               onClick={() => handlerCurrentFile(files[key].path)}>{files[key].name}</a>
+            <a onClick={() => handlerRemove(files[key].path)} >
               {'X'}
             </a>
           </React.Fragment>
@@ -28,9 +28,9 @@ export default class EditorTabs extends React.PureComponent<{
         <input type={'text'}
                onChange={e => this.setState({ fileName: e.target.value })}
                value={this.state.fileName}
-               style={{ display: 'none' }}/>
-        <a onClick={() => handlerAdd(this.state.fileName)}
-           style={{ display: 'none' }}>{'+ Add File'}</a>
+               />
+        <a onClick={() => handlerAdd(this.state.fileName, '')}
+           >{'+ Add File'}</a>
       </div>
     )
   }

@@ -1,36 +1,49 @@
 import { combineReducers } from 'redux'
 
 import { tsSample } from '../../samples'
-import { IFileState } from './types'
-import { CHANGE_FILE, CREATE_FILE, WRITE_FILE } from './actions'
+import { IFileState, IFile } from './types'
+import { CHANGE_FILE, REMOVE_FILE, WRITE_FILE } from './actions'
+import { getDetailsFromPath } from './utils'
+
+export const defaultFileDefinition = (path: string): IFile => ({
+  name: 'untitled',
+  compiled: '',
+  raw: '',
+  path,
+})
+
 const DATA_INITIAL_STATE: IFileState = {
   'scene.js': {
     name: 'scene.js',
     compiled: '',
+    path: `scene.js`,
     raw: tsSample
   }
 }
 
 function data(state: IFileState = DATA_INITIAL_STATE, action): IFileState {
-  switch (action.type) {
-    case CREATE_FILE.request: {
+  const { type, payload } = action
+  switch (type) {
+    case WRITE_FILE.success: {
+      const { path, raw, compiled } = payload as { path: string, raw: string, compiled: string }
+      const pathDetails = getDetailsFromPath(path);
+
       return {
         ...state,
-        [action.name]: {
-          name: action.name,
-          compiled: '',
-          raw: ''
+        [path]: {
+          ...defaultFileDefinition(path),
+          name: pathDetails.name,
+          raw,
+          compiled
         }
       }
     }
-    case WRITE_FILE.success: {
+
+    case REMOVE_FILE.request: {
+      const { path } = payload as { path: string }
+      const { [path]: ignoreFile, ...updatedList } = state
       return {
-        ...state,
-        [action.name]: {
-          name: action.name,
-          raw: action.raw,
-          compiled: action.compiled
-        }
+        ...updatedList
       }
     }
     default:

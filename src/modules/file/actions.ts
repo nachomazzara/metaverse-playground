@@ -1,4 +1,4 @@
-import { normalizeTypes } from '../common/utils'
+import { normalizeTypes, action } from '../common/utils'
 
 export const CHANGE_FILE = normalizeTypes('change file')
 
@@ -9,39 +9,24 @@ export function changeFileRequest(name) {
   }
 }
 
-export const CREATE_FILE = normalizeTypes('create file')
-
-export function createFileRequest(name) {
-  return {
-    type: CREATE_FILE.request,
-    name
-  }
-}
-
 export const REMOVE_FILE = normalizeTypes('remove file')
 
-export function removeFileRequest(name) {
-  return {
-    type: REMOVE_FILE.request,
-    name
-  }
+export function removeFileRequest(path) {
+  return action(REMOVE_FILE.request, {
+    path
+  })
 }
 
 export const WRITE_FILE = normalizeTypes('write file')
 
-export function writeFileRequest(name, raw) {
-  return {
-    type: WRITE_FILE.request,
-    name,
-    raw
-  }
+export function writeFileRequest(path, raw) {
+  return action(WRITE_FILE.request, { path, raw })
 }
 
-export function writeFileSuccess(name, raw, compiled) {
-  return {
-    type: WRITE_FILE.success,
-    name,
+export function writeFileSuccess(path, raw, compiled) {
+  return action(WRITE_FILE.success, {
+    path,
     raw,
     compiled
-  }
+  })
 }

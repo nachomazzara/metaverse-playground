@@ -9,9 +9,9 @@ export enum EditorLanguage {
 export interface IProps {
   currentFile: string,
   files: IFileState,
-  addFiles: (name: string) => void,
-  removeFiles: (name: string) => void,
+  addFiles: (path: string) => void,
+  removeFiles: (path: string) => void,
   language: EditorLanguage
-  changeCurrentFile: (name: string) => void,
-  onChange: (name: string, content: string) => void
+  changeCurrentFile: (path: string) => void,
+  onChange: (path: string, content: string) => void
 }

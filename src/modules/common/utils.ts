@@ -1,3 +1,5 @@
+import {IDictionary} from './types'
+
 export function normalizeTypes(type): { request: string; success: string; failed: string } {
   return {
     request: `[Request] ${type}`,
@@ -18,5 +20,12 @@ export function debounce(func: any, wait: number, immediate?: boolean) {
     clearTimeout(timeout)
     timeout = setTimeout(later, wait)
     if (callNow) func.apply(context, args)
+  }
+}
+
+export function action(type: string, payload: IDictionary<{}>) {
+  return {
+    type,
+    payload
   }
 }

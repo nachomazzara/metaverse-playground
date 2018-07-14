@@ -18,6 +18,12 @@ class Editor extends React.PureComponent<IProps, { val: string }> {
     this.debouncedOnChange = debounce(() => this.props.onChange(this.props.currentFile, this.state.val), 500)
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.currentFile !== prevProps.currentFile) {
+      this.setState({ val: this.props.files[this.props.currentFile].raw })
+    }
+  }
+
   handleEditorCreated = (editor: monaco.editor.IStandaloneCodeEditor) => {
     this.editor = editor
   }
@@ -32,7 +38,7 @@ class Editor extends React.PureComponent<IProps, { val: string }> {
   }
 
   render() {
-    const { files, currentFile, addFiles, removeFiles, changeCurrentFile, language } = this.props
+    const { files, currentFile, removeFiles, changeCurrentFile, language, onChange } = this.props
     const { val } = this.state
 
     return (
@@ -40,7 +46,7 @@ class Editor extends React.PureComponent<IProps, { val: string }> {
         <EditorTabs
           files={files}
           currentFile={currentFile}
-          handlerAdd={addFiles}
+          handlerAdd={onChange}
           handlerRemove={removeFiles}
           handlerCurrentFile={changeCurrentFile}
         />
