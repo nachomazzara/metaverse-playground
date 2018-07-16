@@ -9,19 +9,19 @@ export default function* fileSagas() {
 
 function* handleWriteFile(action) {
   const { path, raw } = action.payload as { path: string; raw: string }
-  const types = ['text/plain', 'application/javascript']
-  let encoded
-  if (path.endsWith('.xml')) {
-    encoded = `data:${types[1]};base64,${btoa(raw)}`
-  } else {
-    const mainFile = yield select(getMainFile)
-    const resolved = yield call(() => transformMetaverseImports(mainFile.raw))
-    encoded = `data:${types[1]};base64,${btoa(compileTypescript(resolved))}`
+  const mainFile = yield select(getMainFile)
+  let encoded = ''
+  if(mainFile.name === path) {
+    const types = ['text/plain', 'application/javascript']
+    if (path.endsWith('.xml')) {
+      encoded = `data:${types[1]};base64,${btoa(raw)}`
+    } else {
+      const mainFile = yield select(getMainFile)
+      const resolved = yield call(() => transformMetaverseImports(mainFile.raw))
+      encoded = `data:${types[1]};base64,${btoa(compileTypescript(resolved))}`
+    }
+    window['sceneJson'].main = encoded // TODO rename to something other than sceneJson
+    window['handleServerMessage']({ type: 'update' })
   }
-  console.log('c')
-
   yield put(writeFileSuccess(path, raw, encoded))
-
-  window['sceneJson'].main = encoded // TODO rename to something other than sceneJson
-  window['handleServerMessage']({ type: 'update' })
 }

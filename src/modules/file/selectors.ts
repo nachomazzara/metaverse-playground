@@ -1,5 +1,5 @@
 const defaultTree = {
-  module: 'scene',
+  module: 'Decentraland',
   collapsed: false,
   children: []
 }

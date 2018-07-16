@@ -1,4 +1,9 @@
 .App {
   height: 100vh;
   overflow: hidden;
+  font-family: Menlo, Monaco, "Courier New", monospace;
+}
+
+.divider {
+  background-color: #404040;
 }

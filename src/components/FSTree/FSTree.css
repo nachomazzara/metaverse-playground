@@ -1,0 +1,43 @@
+.tree-wrapper{
+  background: #272727;
+  color: #d4d4d4;
+  font-size: 12px;
+  padding-left: 10px;
+  width: 100%;
+}
+
+.m-node {
+  margin-top: 8px;
+}
+
+.children .m-node {
+  margin-left: 10px;
+}
+
+i {
+  border: solid #d4d4d4;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-right: 6px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.add-file {
+  background: none;
+  border: none;
+  color: #85ff9a;
+  font-size: 17px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 5px;
+}
